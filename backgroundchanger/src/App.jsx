@@ -5,6 +5,7 @@ function App() {
   const colors = ["red", "blue", "green", "black", "teal"];
 
   const buttons = colors.map((color) => {
+    //You must write return explicitly if your => is followed by a { curly brace!
     return (
       <button
         onClick={() => setColor(color)}
