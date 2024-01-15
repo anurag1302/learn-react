@@ -16,25 +16,22 @@ function App() {
 
     if (includeNumbers) {
       alphabets += numbers;
-      console.log("1", alphabets);
     }
     if (includeCharacters) {
       alphabets += specialCharacters;
-      console.log("2", alphabets);
     }
 
     for (let i = 1; i <= length; i++) {
       let index = Math.floor(Math.random() * alphabets.length + 1);
-      console.log("3", index);
       uniquePassword += alphabets.charAt(index);
     }
 
-    console.log("4", uniquePassword);
     setPassword(uniquePassword);
   }
 
   function copy() {
     window.navigator.clipboard.writeText(password);
+    alert("Copied!!");
   }
 
   useEffect(() => {
@@ -68,18 +65,21 @@ function App() {
             max="50"
             value={length}
             onChange={(e) => setLength(e.target.value)}
+            style={{ cursor: "pointer" }}
           />
           <label>({length})</label>
           <input
             type="checkbox"
             defaultChecked={includeNumbers}
             onChange={() => setIncludeNumbers((prev) => !prev)}
+            style={{ cursor: "pointer" }}
           />
           <label>Include Numbers</label>
           <input
             type="checkbox"
             defaultChecked={includeCharacters}
             onChange={() => setincludeCharacters((prev) => !prev)}
+            style={{ cursor: "pointer" }}
           />
           <label>Include Characters</label>
         </div>
@@ -98,8 +98,13 @@ function App() {
           </p>
         </div>
       </div>
-      <footer style={{ marginTop: "100px" }}>
-        <a>Github Repo</a>
+      <footer style={{ marginTop: "50px", cursor: "pointer" }}>
+        <a
+          href="https://github.com/anurag1302/learn-react/tree/main/passwordgenerator"
+          target="_blank"
+        >
+          Github
+        </a>
       </footer>
     </>
   );
