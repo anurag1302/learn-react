@@ -13,29 +13,31 @@ function App() {
   const [data, setData] = useState({});
   const [from, setFrom] = useState("FROM");
   const [to, setTo] = useState("TO");
-  const selectedOptions = ["usd", "inr", "cad"];
 
   const APIURL = `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${fromCurrency}.json`;
 
   useEffect(() => {
-    console.log("curr", fromCurrency);
     fetch(
       `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${fromCurrency}.json`
     )
       .then((result) => result.json())
       .then((res) => setData(res[fromCurrency]));
-
-    console.log("data", data);
   }, [fromCurrency]);
 
+  const options = Object.keys(data);
+
+  console.log("options", options);
+
   const calculate = () => {
-    let final = amount * 50;
+    let final = amount * data[toCurrency];
     setConvertedAmount(final);
   };
 
   const swap = () => {
-    setFrom(to);
-    setTo(from);
+    setFromCurrency(toCurrency);
+    setToCurrency(fromCurrency);
+    setConvertedAmount(amount);
+    setAmount(convertedAmount);
   };
 
   return (
@@ -43,8 +45,10 @@ function App() {
       <div
         style={{
           padding: "30px",
-          border: "1px solid white",
-          backgroundColor: "#242424",
+          margin: "20px",
+          backgroundImage: "linear-gradient(#DAE2F8,#D6A4A4)",
+          width: "100%",
+          borderRadius: "25px",
         }}
       >
         <h1>Currency Converter</h1>
@@ -52,23 +56,23 @@ function App() {
           label={from}
           amount={amount}
           onInputFieldChange={(e) => setAmount(Number(e.target.value))}
-          currency={fromCurrency}
-          selectOptions={selectedOptions}
+          selectedOption={fromCurrency}
+          selectOptions={options}
           disable={false}
           onSelectChange={(e) => setFromCurrency(e.target.value)}
         />
-        <div style={{ marginTop: "20px", marginBottom: "20px" }}>
-          <button onClick={swap}>Swap</button>
+        <div style={{ marginTop: "30px", marginBottom: "20px" }}>
+          <button onClick={swap}>SWAP</button>
         </div>
         <InputField
           label={to}
           amount={convertedAmount}
-          currency={toCurrency}
-          selectOptions={selectedOptions}
+          selectedOption={toCurrency}
+          selectOptions={options}
           disable={true}
           onSelectChange={(e) => setToCurrency(e.target.value)}
         />
-        <div style={{ marginTop: "20px" }}>
+        <div style={{ marginTop: "50px" }}>
           <button onClick={calculate}>
             Calculate {fromCurrency.toUpperCase()} to {toCurrency.toUpperCase()}
           </button>
