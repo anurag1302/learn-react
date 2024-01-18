@@ -30,7 +30,7 @@ function App() {
 
   const calculate = () => {
     let final = amount * data[toCurrency];
-    setConvertedAmount(final);
+    setConvertedAmount(final.toFixed(2));
   };
 
   const swap = () => {
