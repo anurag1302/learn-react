@@ -1,5 +1,3 @@
-// Work in Progress
-
 import { useEffect, useState } from "react";
 import InputField from "./components/InputField";
 import "./App.css";
@@ -13,8 +11,6 @@ function App() {
   const [data, setData] = useState({});
   const [from, setFrom] = useState("FROM");
   const [to, setTo] = useState("TO");
-
-  const APIURL = `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${fromCurrency}.json`;
 
   useEffect(() => {
     fetch(
