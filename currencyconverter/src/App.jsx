@@ -5,27 +5,37 @@ import InputField from "./components/InputField";
 import "./App.css";
 
 function App() {
-  const [currency, setCurrency] = useState("usd");
+  const [fromCurrency, setFromCurrency] = useState("usd");
+  const [toCurrency, setToCurrency] = useState("inr");
+
   const [amount, setAmount] = useState(0);
   const [convertedAmount, setConvertedAmount] = useState(0);
-  const [data, setData] = useState([]);
-  const APIURL = `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${currency}.json`;
+  const [data, setData] = useState({});
+  const [from, setFrom] = useState("FROM");
+  const [to, setTo] = useState("TO");
+  const selectedOptions = ["usd", "inr", "cad"];
+
+  const APIURL = `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${fromCurrency}.json`;
 
   useEffect(() => {
-    console.log("curr", currency);
+    console.log("curr", fromCurrency);
     fetch(
-      `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${currency}.json`
+      `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${fromCurrency}.json`
     )
       .then((result) => result.json())
-      .then((res) => setData(res[currency]));
+      .then((res) => setData(res[fromCurrency]));
 
     console.log("data", data);
-  }, [currency]);
+  }, [fromCurrency]);
 
   const calculate = () => {
     let final = amount * 50;
     setConvertedAmount(final);
-    setCurrency("inr");
+  };
+
+  const swap = () => {
+    setFrom(to);
+    setTo(from);
   };
 
   return (
@@ -39,36 +49,29 @@ function App() {
       >
         <h1>Currency Converter</h1>
         <InputField
-          label="From"
+          label={from}
           amount={amount}
           onInputFieldChange={(e) => setAmount(Number(e.target.value))}
-          currency={currency}
+          currency={fromCurrency}
+          selectOptions={selectedOptions}
+          disable={false}
+          onSelectChange={(e) => setFromCurrency(e.target.value)}
+        />
+        <div style={{ marginTop: "20px", marginBottom: "20px" }}>
+          <button onClick={swap}>Swap</button>
+        </div>
+        <InputField
+          label={to}
+          amount={convertedAmount}
+          currency={toCurrency}
+          selectOptions={selectedOptions}
+          disable={true}
+          onSelectChange={(e) => setToCurrency(e.target.value)}
         />
         <div style={{ marginTop: "20px" }}>
-          <button>Swap</button>
-        </div>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            marginTop: "20px",
-          }}
-        >
-          <label>To</label>
-          <input
-            type="number"
-            placeholder="Currency"
-            style={{ width: "300px", height: "20px" }}
-            value={convertedAmount}
-            readOnly
-          />
-          <select>
-            <option>inr</option>
-            <option>usd</option>
-          </select>
-        </div>
-        <div style={{ marginTop: "20px" }}>
-          <button onClick={calculate}>Calculate USD to INR</button>
+          <button onClick={calculate}>
+            Calculate {fromCurrency.toUpperCase()} to {toCurrency.toUpperCase()}
+          </button>
         </div>
       </div>
     </>
