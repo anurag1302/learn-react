@@ -24,7 +24,7 @@ function InputField({
           readOnly={disable}
         />
         <select
-          style={{ width: "100px", fontSize: "large" }}
+          style={{ width: "100px", fontSize: "large", cursor: "pointer" }}
           value={selectedOption}
           onChange={onSelectChange}
         >

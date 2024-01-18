@@ -77,6 +77,15 @@ function App() {
             Calculate {fromCurrency.toUpperCase()} to {toCurrency.toUpperCase()}
           </button>
         </div>
+        <footer style={{ marginTop: "20px" }}>
+          <a
+            style={{ color: "black" }}
+            href="https://github.com/anurag1302/learn-react/tree/main/currencyconverter"
+            target="_blank"
+          >
+            Github
+          </a>
+        </footer>
       </div>
     </>
   );
