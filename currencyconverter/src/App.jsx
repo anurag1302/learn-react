@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import InputField from "./components/InputField";
+import useCurrencyDetails from "./hooks/useCurrencyDetails";
 import "./App.css";
 
 function App() {
@@ -8,24 +9,12 @@ function App() {
 
   const [amount, setAmount] = useState(0);
   const [convertedAmount, setConvertedAmount] = useState(0);
-  const [data, setData] = useState({});
-  const [from, setFrom] = useState("FROM");
-  const [to, setTo] = useState("TO");
 
-  useEffect(() => {
-    fetch(
-      `https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/${fromCurrency}.json`
-    )
-      .then((result) => result.json())
-      .then((res) => setData(res[fromCurrency]));
-  }, [fromCurrency]);
-
-  const options = Object.keys(data);
-
-  console.log("options", options);
+  const apiData = useCurrencyDetails(fromCurrency);
+  const options = Object.keys(apiData);
 
   const calculate = () => {
-    let final = amount * data[toCurrency];
+    let final = amount * apiData[toCurrency];
     setConvertedAmount(final.toFixed(2));
   };
 
@@ -49,7 +38,7 @@ function App() {
       >
         <h1>Currency Converter</h1>
         <InputField
-          label={from}
+          label="FROM"
           amount={amount}
           onInputFieldChange={(e) => setAmount(Number(e.target.value))}
           selectedOption={fromCurrency}
@@ -61,7 +50,7 @@ function App() {
           <button onClick={swap}>SWAP</button>
         </div>
         <InputField
-          label={to}
+          label="TO"
           amount={convertedAmount}
           selectedOption={toCurrency}
           selectOptions={options}
