@@ -12,7 +12,7 @@ function App() {
     let uniquePassword = "";
     let alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     let numbers = "0123456789";
-    let specialCharacters = "!#%&'()*+,-./:;<=>?@[]^_`{|}~$";
+    let specialCharacters = "!#%&'()*+,-./:;<=>?@[]^_`{|}~";
 
     if (includeNumbers) {
       alphabets += numbers;
